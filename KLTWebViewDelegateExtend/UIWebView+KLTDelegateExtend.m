@@ -67,9 +67,10 @@ static void *kMainFrameJSContext = &kMainFrameJSContext;
         
         if (mainFrame || isChildFrame(strongSelf, ctx)) { // 为主 frame 或子 frame ，则表示是当前 webview 触发的事件
             // 对外导出 DOMContextLoaded 时需要调用的 Native 方法
+            __weak typeof(ctx) weakCtx = ctx;
             ctx[@"_klt_hybrid_DOMContentLoaded"] = ^() {
                 [weakSelf stringByEvaluatingJavaScriptFromString:@"delete window._klt_hybrid_DOMContentLoaded"];
-                [weakSelf klt_webView:weakSelf domContentLoadedOnMainFrame:mainFrame];
+                [weakSelf klt_webView:weakSelf onDOMContentLoadedWithJSContext:weakCtx isMainFrame:mainFrame];
             };
             // 监听 DOMContentLoaded 事件
             [ctx evaluateScript:
@@ -94,10 +95,10 @@ static void *kMainFrameJSContext = &kMainFrameJSContext;
     }
 }
 
-- (void)klt_webView:(UIWebView *)webView domContentLoadedOnMainFrame:(BOOL)isMainFrame {
+- (void)klt_webView:(UIWebView *)webView onDOMContentLoadedWithJSContext:(JSContext *)currentCtx isMainFrame:(BOOL)isMainFrame {
     id<KLTUIWebViewExtendDelegate> delegate = (id<KLTUIWebViewExtendDelegate>)[self delegate];
-    if ([delegate respondsToSelector:@selector(webView:domContentLoadedOnMainFrame:)]) {
-        [delegate webView:self domContentLoadedOnMainFrame:isMainFrame];
+    if ([delegate respondsToSelector:@selector(webView:onDOMContentLoadedWithJSContext:isMainFrame:)]) {
+        [delegate webView:self onDOMContentLoadedWithJSContext:currentCtx isMainFrame:isMainFrame];
     }
 }
 

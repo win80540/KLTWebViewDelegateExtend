@@ -27,9 +27,10 @@
  * 当 webView Frame 的 DOMContentLoaded 的代理回调，该时机不同于 load，不等待子 frame，图片，CSS，脚本等，只要标签解析完就会触发
  *
  * @param webView UIWebView * 创建 JSContext 的 UIWebView 实例
+ * @param currentCtx JSContext * 当前触发 DOMContentLoaded 事件的 JSContext 实例
  * @param isMainFrame BOOL 是否是 mainFrame 的 JSContext
  *
  */
-- (void)webView:(UIWebView *)webView domContentLoadedOnMainFrame:(BOOL)isMainFrame;
+- (void)webView:(UIWebView *)webView onDOMContentLoadedWithJSContext:(JSContext *)currentCtx isMainFrame:(BOOL)isMainFrame;
 
 @end
