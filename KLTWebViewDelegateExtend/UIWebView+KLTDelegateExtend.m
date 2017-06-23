@@ -79,7 +79,7 @@ static void *kMainFrameJSContext = &kMainFrameJSContext;
              "})();"];
             
             // 将 create JSContext 转发 delegate
-            [weakSelf klt_webView:weakSelf didCreatedJSContext:ctx isMainFrame:mainFrame];
+            [strongSelf klt_webView:strongSelf didCreatedJSContext:ctx isMainFrame:mainFrame];
         }
     }];
     __weak typeof(observer) weakObserver = observer;
