@@ -69,10 +69,12 @@ static void *kMainFrameJSContext = &kMainFrameJSContext;
             // 对外导出 DOMContextLoaded 时需要调用的 Native 方法
             __weak typeof(ctx) weakCtx = ctx;
             ctx[@"_klt_hybrid_DOMContentLoaded"] = ^() {
+                // 删除注入的 _klt_hybrid_DOMContentLoaded，减少对前端的干扰
                 [weakSelf stringByEvaluatingJavaScriptFromString:@"delete window._klt_hybrid_DOMContentLoaded"];
+                // 将 DOMContextLoaded 转发给 delegate
                 [weakSelf klt_webView:weakSelf onDOMContentLoadedWithJSContext:weakCtx isMainFrame:mainFrame];
             };
-            // 监听 DOMContentLoaded 事件
+            // 监听 DOMContentLoaded 事件, 在事件触发时，会回调上面的 block
             [ctx evaluateScript:
              @"(function(){"
              "  document.addEventListener('DOMContentLoaded',_klt_hybrid_DOMContentLoaded);"
@@ -116,19 +118,20 @@ static void *kMainFrameJSContext = &kMainFrameJSContext;
 static BOOL isMainFrame(UIWebView *webView, JSContext *ctx) {
     // 设置标记，用于判断是否是同一个环境
     NSString *uuid = [[NSUUID UUID] UUIDString];
-    [ctx evaluateScript:[NSString stringWithFormat:@"window._klt_tag_uuid = '%@';", uuid]];
-    NSString *webViewID = [webView stringByEvaluatingJavaScriptFromString:@"window._klt_tag_uuid"];
+    [ctx evaluateScript:[NSString stringWithFormat:@"window['_klt_tag_uuid_%@'] = '%@';", uuid, uuid]];
+    NSString *webViewID = [webView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"window['_klt_tag_uuid_%@']", uuid]];
     
+    NSString *deleteScript = [NSString stringWithFormat:@"delete window['_klt_tag_uuid_%@']", uuid];
     // 是否是当前 WebView 的 Ctx
     if ([uuid isEqualToString:webViewID]) {
         // 清除标记
-        [ctx evaluateScript:@"delete window._klt_tag_uuid"];
+        [ctx evaluateScript:deleteScript];
         return YES;
     }
     
     // 清除标记
-    [ctx evaluateScript:@"delete window._klt_tag_uuid"];
-    [webView stringByEvaluatingJavaScriptFromString:@"delete window._klt_tag_uuid"];
+    [ctx evaluateScript:deleteScript];
+    [webView stringByEvaluatingJavaScriptFromString:deleteScript];
     
     return NO;
 }
@@ -143,7 +146,6 @@ static BOOL isChildFrame(UIWebView *webView, JSContext *ctx) {
         if ([[mainCtx globalObject] JSValueRef] == [ctx[@"top"] JSValueRef]) {
             return YES;
         }
-        return NO;
     }
     return NO;
 }
