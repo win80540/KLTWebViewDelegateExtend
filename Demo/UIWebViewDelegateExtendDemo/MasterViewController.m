@@ -8,6 +8,7 @@
 
 #import "MasterViewController.h"
 #import "DetailViewController.h"
+#import "WKWebViewController.h"
 
 @interface MasterViewController ()
 
@@ -21,7 +22,10 @@
     
     self.objects = @[
                      @"https://www.baidu.com",
-                     @"http://localhost:8080/loadtest"
+                     @"http://localhost:8080/loadtest",
+                     @"http://10.242.37.66:8765/page/loan/index.ftl#/",
+                     @"http://10.242.37.66:8765/page/loan/index.ftl#/messageCenter",
+                     @"http://bendmebackmeanywayyouwantme.herokuapp.com/unload"
                      ];
 }
 
@@ -63,6 +67,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     NSString *value = self.objects[indexPath.row];
     if (value && [NSURL URLWithString:value]) {
+        // WKWebViewController *detailVC = [[WKWebViewController alloc] init];
         DetailViewController *detailVC = [[DetailViewController alloc] init];
         [detailVC setDetailItem:[NSURL URLWithString:value]];
         [self.navigationController pushViewController:detailVC animated:YES];

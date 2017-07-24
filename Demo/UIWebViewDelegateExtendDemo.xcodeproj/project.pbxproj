@@ -13,9 +13,10 @@
 		362ED1111EFB72FE00C6DB4E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 362ED10F1EFB72FE00C6DB4E /* LaunchScreen.storyboard */; };
 		362ED1271EFB737D00C6DB4E /* DetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 362ED1241EFB737D00C6DB4E /* DetailViewController.m */; };
 		362ED1281EFB737D00C6DB4E /* MasterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 362ED1261EFB737D00C6DB4E /* MasterViewController.m */; };
+		36CC7EED1F25FB2900AC65EF /* UIWebView+KLTDelegateExtend.m in Sources */ = {isa = PBXBuildFile; fileRef = 36D673E21EFB784200B9B358 /* UIWebView+KLTDelegateExtend.m */; };
+		36CC7EEE1F25FB2C00AC65EF /* NSObject+KLTJSContextCreate.m in Sources */ = {isa = PBXBuildFile; fileRef = 36D673E01EFB784200B9B358 /* NSObject+KLTJSContextCreate.m */; };
 		36D673E31EFB784200B9B358 /* KLTDestoryTrigger.m in Sources */ = {isa = PBXBuildFile; fileRef = 36D673DE1EFB784200B9B358 /* KLTDestoryTrigger.m */; };
-		36D673E41EFB784200B9B358 /* NSObject+KLTJSContextCreate.m in Sources */ = {isa = PBXBuildFile; fileRef = 36D673E01EFB784200B9B358 /* NSObject+KLTJSContextCreate.m */; };
-		36D673E51EFB784200B9B358 /* UIWebView+KLTDelegateExtend.m in Sources */ = {isa = PBXBuildFile; fileRef = 36D673E21EFB784200B9B358 /* UIWebView+KLTDelegateExtend.m */; };
+		36FDCB671F22087F008C3C8E /* WKWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 36FDCB661F22087F008C3C8E /* WKWebViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -36,6 +37,8 @@
 		36D673E01EFB784200B9B358 /* NSObject+KLTJSContextCreate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+KLTJSContextCreate.m"; sourceTree = "<group>"; };
 		36D673E11EFB784200B9B358 /* UIWebView+KLTDelegateExtend.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIWebView+KLTDelegateExtend.h"; sourceTree = "<group>"; };
 		36D673E21EFB784200B9B358 /* UIWebView+KLTDelegateExtend.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIWebView+KLTDelegateExtend.m"; sourceTree = "<group>"; };
+		36FDCB651F22087E008C3C8E /* WKWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WKWebViewController.h; sourceTree = "<group>"; };
+		36FDCB661F22087F008C3C8E /* WKWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WKWebViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -71,6 +74,8 @@
 				36D673DB1EFB784200B9B358 /* KLTWebViewDelegateExtend */,
 				362ED1231EFB737D00C6DB4E /* DetailViewController.h */,
 				362ED1241EFB737D00C6DB4E /* DetailViewController.m */,
+				36FDCB651F22087E008C3C8E /* WKWebViewController.h */,
+				36FDCB661F22087F008C3C8E /* WKWebViewController.m */,
 				362ED1251EFB737D00C6DB4E /* MasterViewController.h */,
 				362ED1261EFB737D00C6DB4E /* MasterViewController.m */,
 				362ED1041EFB72FD00C6DB4E /* AppDelegate.h */,
@@ -186,11 +191,12 @@
 			files = (
 				36D673E31EFB784200B9B358 /* KLTDestoryTrigger.m in Sources */,
 				362ED1061EFB72FD00C6DB4E /* AppDelegate.m in Sources */,
-				36D673E41EFB784200B9B358 /* NSObject+KLTJSContextCreate.m in Sources */,
 				362ED1031EFB72FD00C6DB4E /* main.m in Sources */,
 				362ED1271EFB737D00C6DB4E /* DetailViewController.m in Sources */,
-				36D673E51EFB784200B9B358 /* UIWebView+KLTDelegateExtend.m in Sources */,
+				36CC7EEE1F25FB2C00AC65EF /* NSObject+KLTJSContextCreate.m in Sources */,
 				362ED1281EFB737D00C6DB4E /* MasterViewController.m in Sources */,
+				36CC7EED1F25FB2900AC65EF /* UIWebView+KLTDelegateExtend.m in Sources */,
+				36FDCB671F22087F008C3C8E /* WKWebViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

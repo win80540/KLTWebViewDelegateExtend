@@ -20,19 +20,26 @@
 
 - (void)configureView {
     // Update the user interface for the detail item.
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"back" style:UIBarButtonItemStylePlain target:self action:@selector(doBack:)];
     if (self.detailItem) {
         self.detailDescriptionLabel.text = [self.detailItem description];
     }
 }
 
-
+- (void)doBack:(id)sender {
+    if ([self.webView canGoBack]) {
+        [self.webView goBack];
+    } else {
+        [self.navigationController popViewControllerAnimated:YES];
+    }
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
     [self configureView];
     
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFastForward target:self action:@selector(doNextPage:)];
-    [self.webView loadRequest:[NSURLRequest requestWithURL:self.detailItem]];
+    [self.webView loadRequest:[NSURLRequest requestWithURL:self.detailItem cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:20]];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -53,6 +60,7 @@
     // Dispose of any resources that can be recreated.
 }
 
+
 #pragma mark - UIWebView Original Delegate Methods
 
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType {
@@ -66,7 +74,7 @@
 #endif
     return YES;
 }
-
+/*
 - (void)webViewDidStartLoad:(UIWebView *)webView {
 #if LogWebViewLife
     NSLog(@".log webView start load");
@@ -106,7 +114,7 @@
     }
 #endif
 }
-
+*/
 #pragma mark - Lazy Load
 
 - (UIWebView *)webView {
@@ -115,6 +123,16 @@
     }
     
     _webView = [[UIWebView alloc] init];
+    /* // 这里是开启PageCache的私有API，该方法能开到3
+    if (YES) {
+        [[NSUserDefaults standardUserDefaults] setInteger:2 forKey: @"WebKitCacheModelPreferenceKey"];
+        // [[NSUserDefaults standardUserDefaults] setInteger:1 forKey: @"WebKitMediaPlaybackAllowsInline"];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+        id webView = [_webView valueForKeyPath:@"_internal.browserView._webView"];
+        id preferences = [webView valueForKey:@"preferences"];
+        [preferences performSelector:@selector(_postCacheModelChangedNotification)];
+    }
+     */
     _webView.frame = self.view.bounds;
     _webView.delegate = self;
     _webView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
